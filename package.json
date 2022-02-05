@@ -1,0 +1,31 @@
+{
+  "name": "gartic-phone-prompts",
+  "version": "1.0.0",
+  "description": "A Discord Bot that generates prompts for Gartic Phone based on user provided word banks",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/client.js",
+    "dev": "nodemon src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JeremyKaniewski/GarticPhonePrompts.git"
+  },
+  "author": "Jeremy Kaniewski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JeremyKaniewski/GarticPhonePrompts/issues"
+  },
+  "homepage": "https://github.com/JeremyKaniewski/GarticPhonePrompts#readme",
+  "devDependencies": {
+    "dotenv": "^16.0.0",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "discord.js": "^13.6.0",
+    "wokcommands": "^1.5.3"
+  }
+}
