@@ -2,6 +2,7 @@ import DiscordJS, { Intents } from "discord.js";
 import WOKCommands from 'wokcommands';
 import path from 'path';
 import { ENV } from "./config";
+import WordsService from "./services/words";
 
 const client = new DiscordJS.Client({
     intents: [
@@ -11,6 +12,7 @@ const client = new DiscordJS.Client({
   });
 
 client.on("ready", async () => {
+    await WordsService.initalize()
     console.log(">> Bot started");
 
     new WOKCommands(client, {
@@ -29,3 +31,15 @@ client.on("ready", async () => {
 })
 
 client.login(ENV.BOT_TOKEN ?? "");
+
+process.on("SIGTERM", () => {
+  WordsService.save()
+})
+
+process.on("SIGINT", () => {
+  WordsService.save()
+})
+
+process.on("uncaughtException", () => {
+  WordsService.save()
+})
