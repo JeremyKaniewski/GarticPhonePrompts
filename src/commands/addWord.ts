@@ -6,8 +6,7 @@ export default {
     category: "Add Word",
     description: "Adds a word to the word bank",
     slash: true,
-    testOnly: true,
-
+    
     options: [{
         name: "category",
         description: "category of word you're adding",

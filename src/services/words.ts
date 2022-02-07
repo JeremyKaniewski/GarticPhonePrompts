@@ -1,4 +1,4 @@
-import {category, wordData} from "../types/categories"
+import {wordData} from "../types/categories"
 import path from "path"
 import fs from "fs"
 
@@ -10,7 +10,7 @@ class WordsService {
     }
 
     static async initalize(): Promise<void> {
-        console.log("Initalizing words..")
+        console.log(">> Initalizing word banks..")
 
         try {
             let data = fs.readFileSync(path.resolve(__dirname, `../data.json`), 'utf8')
@@ -22,7 +22,7 @@ class WordsService {
                 locations: parsedData.locations
             }
             
-            console.log("Successfully processed words!")
+            console.log(">> Successfully processed word banks!")
         } catch (error) {
             console.log("ERROR " + error)
         }
@@ -32,20 +32,6 @@ class WordsService {
         return words.split(',').map((word) => {
             return word.trim()
         })
-    }
-
-    static checkForDuplicates(words: string[], wordList: string[]): boolean[] {
-        let duplicatesArray: boolean[] = []
-        
-        words.forEach((word) => {
-            if (wordList.indexOf(word) !== -1) {
-                duplicatesArray.push(true)
-            } else {
-                duplicatesArray.push(false)
-            }
-        })
-
-        return duplicatesArray
     }
 
     static addWords(words: string[], category: string): boolean[] {
@@ -83,21 +69,25 @@ class WordsService {
         let verbsLength = this.words.verbs.length
         let locationsLength = this.words.locations.length
 
-        let name = this.words.names[this.randomInt(namesLength)]
-        let verb = this.words.verbs[this.randomInt(verbsLength)]
-        let location = this.words.locations[this.randomInt(locationsLength)]
-
-        return `${name} ${verb} ${location}`
+        if ((namesLength && verbsLength && locationsLength) > 3) {
+            let name = this.words.names[this.randomInt(namesLength)]
+            let verb = this.words.verbs[this.randomInt(verbsLength)]
+            let location = this.words.locations[this.randomInt(locationsLength)]
+    
+            return `${name} ${verb} ${location}`
+        } else {
+            return `There must be 3 words in each category before prompts can be generated!\n Names: ${namesLength}\n Verbs: ${verbsLength}\n Locations: ${locationsLength}`
+        }
     }
 
     static save(): void {
-        console.log("Saving words to disk..")
+        console.log(">> Saving words to disk..")
 
         try {
             fs.writeFileSync(path.resolve(__dirname, `../data.json`), JSON.stringify(this.words))
-            console.log("Successfully saved words to disk!")
+            console.log(">> Successfully saved words to disk!")
         } catch (error) {
-            console.log("Failed to save words to disk.. writing to console")
+            console.log(">> Failed to save words to disk.. writing to console")
             console.log(this.words)
             console.log(error)
         }

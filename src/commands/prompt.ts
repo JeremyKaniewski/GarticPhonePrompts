@@ -6,7 +6,6 @@ export default {
     category: "Prompts",
     description: "Generates a random prompt based on the word bank",
     slash: true,
-    testOnly: true,
 
     callback: ({interaction: msgInt, channel}) => {
         const embed = new MessageEmbed()
@@ -16,7 +15,7 @@ export default {
             let prompt = WordsService.generatePrompt()
 
             embed  
-                .setTitle("Prompt generated")
+                .setTitle("Prompt Generator")
                 .setDescription(prompt)
                 .setColor("GREEN")
 
